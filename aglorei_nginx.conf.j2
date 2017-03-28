@@ -62,7 +62,7 @@ http {
         }
 
         {% if GRAFANA_ENDPOINT|default %}
-        location /grafana {
+        location /grafana/ {
             proxy_pass http://{{ MONITORING_ENDPOINT }}:3000;
         }
         {% endif %}
