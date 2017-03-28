@@ -61,6 +61,12 @@ http {
             limit_req zone=weechat burst=1 nodelay;   # Brute force prevention
         }
 
+        {% if GRAFANA_ENDPOINT|default %}
+        location /grafana {
+            proxy_pass {{ MONITORING_ENDPOINT }}:3000;
+        }
+        {% endif %}
+
         location /nginx_status {
             stub_status on;
             access_log off;
