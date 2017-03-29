@@ -11,9 +11,10 @@
 # Run nginx
 # docker run --name turtle-nginx \
 #   -e GRAFANA_ENDPOINT=<grafana_server_address> \
-#   -e MONITORING_ENDPOINT=35.162.137.87 \
-#   -v </path/to/ssl/certificate.pem>:/etc/ssl/certs/ssl-cert.pem:ro \
-#   -v </path/to/ssl/private/key.pem:/etc/ssl/private/ssl-cert.pem:ro \
+#   -e MONITORING_ENDPOINT=<collect_server_address> \
+#   -v </path/to/ssl/certs/server.crt>:/etc/ssl/certs/server.crt:ro \
+#   -v </path/to/ssl/private/server.pem>:/etc/ssl/private/server.key:ro \
+#   -v </path/to/ssl/private/ca-certs.pem>:/etc/ssl/private/ca-certs.pem:ro \
 #   -v </path/to/dhparam.pem>:/etc/ssl/certs/dhparam.pem:ro \
 #   -p 80:80 -p 443:443 -d --restart=always turtle-nginx:latest
 

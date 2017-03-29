@@ -29,8 +29,8 @@ http {
 
         # certs sent to the client in SERVER HELLO are concatenated in
         # ssl_certificate
-        ssl_certificate /etc/ssl/certs/ssl-cert.pem;
-        ssl_certificate_key /etc/ssl/private/ssl-cert.pem;
+        ssl_certificate /etc/ssl/certs/server.crt;
+        ssl_certificate_key /etc/ssl/private/server.key;
         ssl_session_timeout 1d;
         ssl_session_cache shared:SSL:50m;
         ssl_session_tickets off;
@@ -50,6 +50,10 @@ http {
         # fetch OCSP records from URL in ssl_certificate and cache them
         ssl_stapling on;
         ssl_stapling_verify on;
+        resolver 127.0.0.1 [::1]:5353;
+
+        # verify chain of trust of OCSP response using Root CA and Intermediate certs
+        ssl_trusted_certificate /etc/ssl/private/ca-certs.pem;
 
         location /weechat {
             proxy_pass http://localhost:9001/weechat;
