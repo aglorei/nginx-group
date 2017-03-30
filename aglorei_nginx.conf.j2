@@ -18,8 +18,17 @@ http {
         listen 80 default_server;
         listen [::]:80 default_server;
 
-        # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response
-        return 301 https://$host$request_uri;
+        location / {
+            # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response
+            return 301 https://$host$request_uri;
+        }
+
+        location /nginx_status {
+            stub_status on;
+            access_log off;
+            allow {{ MONITORING_ENDPOINT|default or '127.0.0.1' }};
+            deny all;
+        }
     }
 
     server {
@@ -70,12 +79,5 @@ http {
             proxy_pass http://{{ MONITORING_ENDPOINT }}:3000/;
         }
         {% endif %}
-
-        location /nginx_status {
-            stub_status on;
-            access_log off;
-            allow {{ MONITORING_ENDPOINT|default or '127.0.0.1' }};
-            deny all;
-        }
     }
 }
