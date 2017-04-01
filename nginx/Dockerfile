@@ -30,7 +30,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # Copy over templates
-COPY aglorei_nginx.conf.j2 /templates/
+COPY nginx.conf.j2 /templates/
 COPY docker_entrypoint.sh /
 
 # Entrypoint and CMD
