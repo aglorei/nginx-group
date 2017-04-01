@@ -10,8 +10,9 @@
 #
 # Run nginx
 # docker run --name turtle-nginx \
-#   -e GRAFANA_ENDPOINT=<grafana_server_address> \
-#   -e MONITORING_ENDPOINT=<collect_server_address> \
+#   -e COLLECTD_HOST=<collectd_host> \
+#   -e GRAFANA_HOST=<grafana_host> \
+#   -e GRAFANA_PORT=<grafana_port> \
 #   -v </path/to/ssl/certs/server.crt>:/etc/ssl/certs/server.crt:ro \
 #   -v </path/to/ssl/private/server.pem>:/etc/ssl/private/server.key:ro \
 #   -v </path/to/ssl/private/ca-certs.pem>:/etc/ssl/private/ca-certs.pem:ro \

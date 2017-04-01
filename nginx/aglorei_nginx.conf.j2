@@ -26,7 +26,7 @@ http {
         location /nginx_status {
             stub_status on;
             access_log off;
-            allow {{ MONITORING_ENDPOINT|default or '127.0.0.1' }};
+            allow {{ COLLECTD_HOST|default or '127.0.0.1' }};
             deny all;
         }
     }
@@ -64,8 +64,9 @@ http {
         # verify chain of trust of OCSP response using Root CA and Intermediate certs
         ssl_trusted_certificate /etc/ssl/private/ca-certs.pem;
 
+        {% if WEECHAT_HOST|default %}
         location /weechat {
-            proxy_pass http://localhost:9001/weechat;
+            proxy_pass {{ WEECHAT_HOST }}:{{ WEECHAT_PORT|default(9001) }}/weechat;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;   # These two lines ensure that
             proxy_set_header Connection "Upgrade";    # a WebSocket is used
@@ -73,10 +74,11 @@ http {
             proxy_set_header X-Real-IP $remote_addr;  # Let WeeChat see the client's IP
             limit_req zone=weechat burst=1 nodelay;   # Brute force prevention
         }
+        {% endif %}
 
-        {% if GRAFANA_ENDPOINT|default %}
+        {% if GRAFANA_HOST|default %}
         location /grafana/ {
-            proxy_pass http://{{ MONITORING_ENDPOINT }}:3000/;
+            proxy_pass {{ GRAFANA_HOST }}:{{ GRAFANA_PORT|default(3000) }};
         }
         {% endif %}
     }

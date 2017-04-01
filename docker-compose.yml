@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+    environment:
+      COLLECTD_HOST: "${COLLECTD_HOST}"
+      GRAFANA_HOST: "${GRAFANA_HOST}"
+      GRAFANA_PORT: "${GRAFANA_PORT}"
+      WEECHAT_HOST: "${WEECHAT_HOST}"
+      WEECHAT_PORT: "${WEECHAT_PORT}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "${SSL_CERTIFICATE}":/etc/ssl/certs/server.crt:ro
+      - "${SSL_CERTIFICATE_KEY}":/etc/ssl/private/server.key:ro
+      - "${SSL_TRUSTED_CERTIFICATE}":/etc/ssl/private/ca-certs.pem:ro
+      - "${DH_PARAMS}":/etc/ssl/certs/dhparam.pem:ro
+    restart_policy:
+      condition: any
