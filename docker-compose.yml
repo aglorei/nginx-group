@@ -20,8 +20,6 @@ services:
       - "${DH_PARAMS}":/etc/ssl/certs/dhparam.pem:ro
     networks:
       - nginx-cluster-network
-    restart_policy:
-      condition: any
   collectd:
     build:
       context: ./collectd
@@ -34,6 +32,8 @@ services:
     networks:
       nginx-cluster-network:
         ipv4_address: 172.16.238.10
+    depends_on:
+      - nginx
 
 volumes:
   nginx-cluster-collectd-storage:
