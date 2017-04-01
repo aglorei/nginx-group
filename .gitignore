@@ -22,14 +22,9 @@
 
 # Logs and databases #
 ######################
-logs/
 *.log
 *.sql
 *.sqlite
-
-# sensitive files #
-###################
-ssl/
 
 # OS generated files #
 ######################
