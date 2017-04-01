@@ -14,10 +14,10 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "${SSL_CERTIFICATE}":/etc/ssl/certs/server.crt:ro
-      - "${SSL_CERTIFICATE_KEY}":/etc/ssl/private/server.key:ro
-      - "${SSL_TRUSTED_CERTIFICATE}":/etc/ssl/private/ca-certs.pem:ro
-      - "${DH_PARAMS}":/etc/ssl/certs/dhparam.pem:ro
+      - ${SSL_CERTIFICATE}:/etc/ssl/certs/server.crt:ro
+      - ${SSL_CERTIFICATE_KEY}:/etc/ssl/private/server.key:ro
+      - ${SSL_TRUSTED_CERTIFICATE}:/etc/ssl/private/ca-certs.pem:ro
+      - ${DH_PARAMS}:/etc/ssl/certs/dhparam.pem:ro
     networks:
       - nginx-cluster-network
   collectd:
@@ -38,7 +38,7 @@ services:
 volumes:
   nginx-cluster-collectd-storage:
 
-network:
+networks:
   nginx-cluster-network:
     ipam:
       config:
