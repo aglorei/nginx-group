@@ -26,7 +26,7 @@ services:
     environment:
       INFLUXDB_HOST: "${INFLUXDB_HOST}"
       INFLUXDB_PORT: "${INFLUXDB_PORT}"
-      NGINX_STUB_ADDRESS: http://nginx:80/nginx_status
+      NGINX_STUB_ADDRESS: http://nginx/nginx_status
     volumes:
       - nginx-cluster-collectd-storage:/var/lib/collectd/
     networks:
