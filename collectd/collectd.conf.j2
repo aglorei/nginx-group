@@ -13,11 +13,11 @@ Interval 1.0
 </Plugin>
 
 <Plugin network>
-  Server "influxdb" "25826"
+  Server "{{ INFLUXDB_HOST }}" "{{ INFLUXDB_PORT }}"
 </Plugin>
 
 <Plugin nginx>
-  URL {{ NGINX_STUB_ADDRESS }}
+  URL "{{ NGINX_STUB_ADDRESS }}"
 </Plugin>
 
 <Plugin rrdtool>
