@@ -1,0 +1,30 @@
+FQDNLookup true
+LoadPlugin logfile
+LoadPlugin network
+LoadPlugin nginx
+LoadPlugin rrdtool
+
+Interval 1.0
+
+<Plugin logfile>
+  LogLevel "info"
+  File "stdout"
+  PrintSeverity true
+</Plugin>
+
+<Plugin network>
+  Server "influxdb" "25826"
+</Plugin>
+
+<Plugin nginx>
+  URL {{ NGINX_STUB_ADDRESS }}
+</Plugin>
+
+<Plugin rrdtool>
+  DataDir "/var/lib/collectd/rrd"
+</Plugin>
+
+<Include "/etc/collectd/collectd.conf.d">
+  Filter "*.conf"
+</Include>
+

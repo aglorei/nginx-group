@@ -5,7 +5,7 @@ services:
     build:
       context: ./nginx
     environment:
-      COLLECTD_HOST: "${COLLECTD_HOST}"
+      COLLECTD_HOST: 172.16.238.10
       GRAFANA_HOST: "${GRAFANA_HOST}"
       GRAFANA_PORT: "${GRAFANA_PORT}"
       WEECHAT_HOST: "${WEECHAT_HOST}"
@@ -18,5 +18,26 @@ services:
       - "${SSL_CERTIFICATE_KEY}":/etc/ssl/private/server.key:ro
       - "${SSL_TRUSTED_CERTIFICATE}":/etc/ssl/private/ca-certs.pem:ro
       - "${DH_PARAMS}":/etc/ssl/certs/dhparam.pem:ro
+    networks:
+      - nginx-cluster-network
     restart_policy:
       condition: any
+  collectd:
+    build:
+      context: ./collectd
+    environment:
+      NGINX_STUB_ADDRESS: http://nginx:80/nginx_status
+    volumes:
+      - nginx-cluster-collectd-storage:/var/lib/collectd/
+    networks:
+      nginx-cluster-network:
+        ipv4_address: 172.16.238.10
+
+volumes:
+  nginx-cluster-collectd-storage:
+
+network:
+  nginx-cluster-network:
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
