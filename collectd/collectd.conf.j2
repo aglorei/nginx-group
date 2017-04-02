@@ -12,19 +12,19 @@ Interval 1.0
   PrintSeverity true
 </Plugin>
 
+{% if INFLUXDB_HOST|default %}
 <Plugin network>
-  Server "{{ INFLUXDB_HOST }}" "{{ INFLUXDB_PORT }}"
+  Server "{{ INFLUXDB_HOST }}" "{{ INFLUXDB_PORT|default(25826) }}"
 </Plugin>
+{% endif %}
 
+{% if NGINX_STUB_ADDRESS|default %}
 <Plugin nginx>
   URL "{{ NGINX_STUB_ADDRESS }}"
 </Plugin>
+{% endif %}
 
 <Plugin rrdtool>
   DataDir "/var/lib/collectd/rrd"
 </Plugin>
-
-<Include "/etc/collectd/collectd.conf.d">
-  Filter "*.conf"
-</Include>
 
