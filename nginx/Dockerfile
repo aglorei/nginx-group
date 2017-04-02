@@ -20,14 +20,15 @@
 #   -p 80:80 -p 443:443 -d --restart=always turtle-nginx:latest
 
 # Base Image
-FROM nginx:1.11.10
+FROM nginx:1.11.10-alpine
 
 # Install j2cli
-RUN apt-get update && \
-  apt-get install -y python-setuptools && \
-  easy_install j2cli && \
-  apt-get purge -y --auto-remove && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk add --update \
+  # py-pip for j2cli
+  py-pip \
+  && pip install pip j2cli --upgrade \
+  # cleanup
+  && rm -rf /var/cache/apk/*
 
 # Copy over templates
 COPY nginx.conf.j2 /templates/

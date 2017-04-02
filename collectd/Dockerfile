@@ -23,8 +23,8 @@ RUN apk add --update \
   # other instances
   collectd-network \
   libgcrypt \
-	# NGINX plugin collects the number of requests handled since startup and the
-	# number of current connections by connection state
+  # NGINX plugin collects the number of requests handled since startup and the
+  # number of current connections by connection state
   collectd-nginx \
   libcurl \
   # py-pip for j2cli
