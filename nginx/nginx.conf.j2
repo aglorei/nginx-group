@@ -78,7 +78,7 @@ http {
 
         {% if GRAFANA_HOST|default %}
         location /grafana/ {
-            proxy_pass {{ GRAFANA_HOST }}:{{ GRAFANA_PORT|default(3000) }};
+            proxy_pass {{ GRAFANA_HOST }}:{{ GRAFANA_PORT|default(3000) }}/;
         }
         {% endif %}
     }
