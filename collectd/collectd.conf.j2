@@ -4,7 +4,7 @@ LoadPlugin network
 LoadPlugin nginx
 LoadPlugin rrdtool
 
-Interval 1.0
+Interval {{ INTERVAL|default("1.0") }}
 
 <Plugin logfile>
   LogLevel "info"

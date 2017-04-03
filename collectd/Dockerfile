@@ -1,7 +1,7 @@
 # DESCRIPTION: install and run collectd with nginx, network packages
 # AUTHOR: aglorei
 # COMMENTS:
-# Install collectd in debian base image
+# Install collectd in alpine base image
 # USAGE:
 # Build collectd image
 # docker build -t collectd-docker
@@ -9,6 +9,10 @@
 # Run collectd
 # docker run -d --name=collectd \
 # -v /path/to/collectd.conf:/etc/collectd/collectd.conf:ro \
+# -e INTERVAL=1.0
+# -e INFLUXDB_HOST=10.0.0.1
+# -e INFLUXDB_PORT=25826
+# -e NGINX_STUB_ADDRESS=http://domain.com/nginx_status
 # --volumes-from persistent-storage
 # collectd-docker
 
