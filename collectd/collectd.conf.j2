@@ -1,4 +1,4 @@
-FQDNLookup true
+Hostname {{ NGINX_STUB_ADDRESS }}
 LoadPlugin logfile
 LoadPlugin network
 LoadPlugin nginx
@@ -18,11 +18,9 @@ Interval {{ INTERVAL|default("1.0") }}
 </Plugin>
 {% endif %}
 
-{% if NGINX_STUB_ADDRESS|default %}
 <Plugin nginx>
   URL "{{ NGINX_STUB_ADDRESS }}"
 </Plugin>
-{% endif %}
 
 <Plugin rrdtool>
   DataDir "/var/lib/collectd/rrd"
