@@ -20,6 +20,10 @@ services:
       - ${DH_PARAMS}:/etc/ssl/certs/dhparam.pem:ro
     networks:
       - nginx-cluster-network
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "${SYSLOG_ADDRESS}"
   telegraf:
     image: telegraf:1.2.1-alpine
     environment:
@@ -34,6 +38,10 @@ services:
     networks:
       nginx-cluster-network:
         ipv4_address: 172.16.238.10
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "${SYSLOG_ADDRESS}"
     depends_on:
       - nginx
 
