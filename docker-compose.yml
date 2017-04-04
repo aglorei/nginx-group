@@ -5,7 +5,7 @@ services:
     build:
       context: ./nginx
     environment:
-      COLLECTD_HOST: 172.16.238.10
+      TELEGRAF_HOST: 172.16.238.10
       GRAFANA_HOST: "${GRAFANA_HOST}"
       GRAFANA_PORT: "${GRAFANA_PORT}"
       WEECHAT_HOST: "${WEECHAT_HOST}"
@@ -20,15 +20,17 @@ services:
       - ${DH_PARAMS}:/etc/ssl/certs/dhparam.pem:ro
     networks:
       - nginx-cluster-network
-  collectd:
-    build:
-      context: ./collectd
+  telegraf:
+    image: telegraf:1.2.1-alpine
     environment:
+      HOSTNAME: "${AGENT_HOSTNAME}"
+      AGENT_INTERVAL: "${AGENT_INTERVAL}"
       INFLUXDB_HOST: "${INFLUXDB_HOST}"
       INFLUXDB_PORT: "${INFLUXDB_PORT}"
-      NGINX_STUB_ADDRESS: http://nginx/nginx_status
+      NGINX_STATUS_URL: http://nginx/nginx_status
     volumes:
-      - nginx-cluster-collectd-storage:/var/lib/collectd/
+      - nginx-cluster-telegraf-storage:/var/lib/telegraf/
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
       nginx-cluster-network:
         ipv4_address: 172.16.238.10
@@ -36,7 +38,7 @@ services:
       - nginx
 
 volumes:
-  nginx-cluster-collectd-storage:
+  nginx-cluster-telegraf-storage:
 
 networks:
   nginx-cluster-network:

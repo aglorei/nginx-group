@@ -1,8 +1,8 @@
 # DESCRIPTION: configure and run nginx 1.11.10
 # AUTHOR: aglorei
 # COMMENTS:
-# This uses ngx_http_stub_status_module to send collectd usage information, and
-# provides an endpoint for a grafana dashboard. It requires an SSL certificate
+# This uses ngx_http_stub_status_module for telegraf to poll usage information,
+# and provides an endpoint for a grafana dashboard. It requires an SSL certificate
 # from a provider.
 # USAGE:
 # Build nginx image
@@ -10,9 +10,11 @@
 #
 # Run nginx
 # docker run --name turtle-nginx \
-#   -e COLLECTD_HOST=<collectd_host> \
+#   -e TELEGRAF_HOST=<telegraf_host> \
 #   -e GRAFANA_HOST=<grafana_host> \
 #   -e GRAFANA_PORT=<grafana_port> \
+#   -e WEECHAT_HOST=<weechat_host> \
+#   -e WEECHAT_PORT=<weechat_port> \
 #   -v </path/to/ssl/certs/server.crt>:/etc/ssl/certs/server.crt:ro \
 #   -v </path/to/ssl/private/server.pem>:/etc/ssl/private/server.key:ro \
 #   -v </path/to/ssl/private/ca-certs.pem>:/etc/ssl/private/ca-certs.pem:ro \
