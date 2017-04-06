@@ -33,7 +33,6 @@ services:
       INFLUXDB_PORT: "${INFLUXDB_PORT}"
       NGINX_STATUS_URL: http://nginx/nginx_status
     volumes:
-      - nginx-cluster-telegraf-storage:/var/lib/telegraf/
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
       nginx-cluster-network:
@@ -44,9 +43,6 @@ services:
         syslog-address: "${SYSLOG_ADDRESS}"
     depends_on:
       - nginx
-
-volumes:
-  nginx-cluster-telegraf-storage:
 
 networks:
   nginx-cluster-network:
