@@ -2,10 +2,10 @@
 
 This repository configures an HTTPS reverse proxy with a server sidecar for collecting metrics.
 
-- Nginx 1.11.10-alpine service
+- [Nginx 1.11.10-alpine](https://hub.docker.com/_/nginx/)
   - See [Nginx documentation on HTTPS configuration and optimization](http://nginx.org/en/docs/http/configuring_https_servers.html)
   - The [`ngx_http_stub_status_module`](ngx_http_stub_status_module) is enabled at `http://<hostname>:<port>/nginx_status` for basic status data used in metrics reporting
-- Telegraf 1.2.1-alpine service
+- [Telegraf 1.2.1-alpine](https://hub.docker.com/_/telegraf/)
   - See [InfluxData's documentation on the Nginx plugin for Nginx](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/nginx)
   - Outputs to InfluxDB to the default retention policy on a database "nginx"
 
