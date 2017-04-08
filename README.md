@@ -17,6 +17,7 @@ This repository configures an HTTPS reverse proxy with a server sidecar for coll
 
 #### Quick Start:
 Configure environment variables, or a `.env`:
+
 | Variable | Description |
 | ------------- | ------------- |
 | `AGENT_HOSTNAME` | Name used in tag values for "host" in InfluxDB database |
