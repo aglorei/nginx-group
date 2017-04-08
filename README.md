@@ -10,12 +10,14 @@ This repository configures an HTTPS reverse proxy with a server sidecar for coll
   - Outputs to InfluxDB to the default retention policy on a database "nginx"
 
 #### Requirements
+
 - SSL certificate on the proxy host for HTTPS
 - InfluxDB server for recording metrics
   - Optional: retention policies and continuous queries created on a database "nginx"
 - Syslog server for logging
 
 #### Quick Start:
+
 Configure environment variables, or a `.env`:
 
 | Variable | Description |
@@ -34,5 +36,21 @@ To build and start containers:
 
 ```
 docker-compose up -d
+```
+
+#### Optional: Bootstrap InfluxDB Database
+
+Telegraf communicates its metrics to an InfluxDB database and retention policy. If the database "nginx" does not exist, InfluxDB will create it, but will not configure retention policies or downsampling continuous queries.
+If immediate database configuration is desired, before starting containers, open up an `influx` console on your InfluxDB host and input the following:
+
+```
+# create the nginx database with optional default retention policy
+CREATE DATABASE "nginx" # WITH [DURATION <duration>] [REPLICATION <replication>] [NAME <retention-policy-name>]
+
+# create additional retention policies
+CREATE RETENTION POLICY <retention-policy-name> ON "nginx" WITH DURATION <duration> REPLICATION <replication> NAME <retention-policy-name>
+
+# create continuous queries
+CREATE CONTINUOUS QUERY <cq_name> ON "nginx" BEGIN SELECT mean(accepts) AS accepts, mean(active) AS active, mean(handled) AS handled, mean(reading) AS reading, mean(requests) AS requests, mean(waiting) AS waiting, mean(writing) AS writing INTO nginx.<target-retention-policy-name>.:MEASUREMENT FROM nginx.<source-retention-policy-name>.nginx GROUP BY time(<interval>), * END
 ```
 
