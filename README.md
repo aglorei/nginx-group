@@ -1,4 +1,4 @@
-# Nginx and Telegraf Cluster
+# Nginx and Telegraf Group
 
 This repository configures an HTTPS reverse proxy with a server sidecar for collecting metrics.
 
