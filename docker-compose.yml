@@ -19,7 +19,7 @@ services:
       - ${SSL_TRUSTED_CERTIFICATE}:/etc/ssl/private/ca-certs.pem:ro
       - ${DH_PARAMS}:/etc/ssl/certs/dhparam.pem:ro
     networks:
-      - nginx-cluster-network
+      - nginx-group-network
     logging:
       driver: syslog
       options:
@@ -35,7 +35,7 @@ services:
     volumes:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
-      nginx-cluster-network:
+      nginx-group-network:
         ipv4_address: 172.16.238.10
     logging:
       driver: syslog
@@ -45,7 +45,7 @@ services:
       - nginx
 
 networks:
-  nginx-cluster-network:
+  nginx-group-network:
     ipam:
       config:
         - subnet: 172.16.238.0/24
